@@ -7,15 +7,14 @@ A simple, real-time (client-server) chat application that runs directly in your 
 * **Client-Server Architecture:** A dedicated `server.js` handles connections and a `client.js` connects to it.
 * **Real-Time Communication:** Uses Node.js `net` ( sockets) for instant message delivery.
 * **CLI Options:** Both client and server use `commander` for easy configuration of host, port, and usernames via command-line flags.
-* **Clean Interface:** The client uses the `readline` module to provide a proper chat prompt (e.g., `YourName > `) and prevents incoming messages from breaking the line you are typing on.
 * **Connection Handling:** Gracefully handles client disconnects.
 
 ## Installation
 
 1.  **Clone the repository:**
     ```bash
-    git clone [https://github.com/your-username/your-repo-name.git](https://github.com/your-username/your-repo-name.git)
-    cd your-repo-name
+    git clone [https://github.com/Maestro-blip/ScaramushChat.git)
+    cd ScaramushChat
     ```
 
 2.  **Install dependencies:**
