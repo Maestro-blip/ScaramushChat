@@ -1,18 +1,31 @@
-const net = require('net')
+const net = require('net');
+const { program } = require('commander');
 
-const PORT = 8000;
-const HOST = 'localhost';
+program
+    .option('-h, --host [address]', 'адреса сервера', 'localhost') 
+    .option('-p, --port [port]', 'порт сервера', '8000')
+    .option('--sn, --servername [name]', 'ім`я', 'undefined_Client'); 
 
-const client = net.createConnection({port: PORT, host: HOST}, (dataClient) =>{
+program.parse();
+const options = program.opts();
 
-console.log('Я підключився до сервера!');
 
-data_imput = process.stdin.on('data', (data) => {
+PORT = options.port;
+HOST = options.host;
+servname = options.servername;
 
-        filterdata=data.toString().trim()
-            client.write(filterdata)       
+const client = net.createConnection({port: PORT, host: HOST}, () =>{
+
+    console.log('Я підключився до сервера!');
+
+    data_imput = process.stdin.on('data', (data) => {
+
+            filterdata=data.toString().trim()
+            messageToSend = `${servname}: ${filterdata}`
+                client.write(messageToSend)       
+    });
+
 });
-
 
 client.on('data', (data) => {
 
@@ -20,6 +33,7 @@ client.on('data', (data) => {
     console.log(filterdata)
 });
 
- 
+client.on('end', () => {
+    console.log('\nВідключено від сервера.');
+    process.exit();
 });
-

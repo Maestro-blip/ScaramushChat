@@ -1,8 +1,18 @@
-const net = require('net')
+const net = require('net');
+const { program } = require('commander');
 
-PORT = 8000;
-HOST = 'localhost';
+program
+    .option('-h, --host [address]', 'адреса сервера', 'localhost') 
+    .option('-p, --port [port]', 'порт сервера', '8000')
+    .option('--sn, --servername [name]', 'ім`я', 'undefined_Server'); 
 
+program.parse();
+const options = program.opts();
+
+
+PORT = options.port;
+HOST = options.host;
+servname = options.servername;
 
 const server = net.createServer( (socket) => {
 
@@ -12,11 +22,17 @@ const server = net.createServer( (socket) => {
         filterdata=data.toString().trim()
             console.log(filterdata)
     });
-
-    dataImput = process.stdin.on('data', (data) => {
+    
+    socket.on('close',(closeconect) => {
+        console.log("З\'єднання втрачено")
+    })
+    
+   dataImput = process.stdin.on('data', (data) => {
         filterdata=data.toString().trim()
-            socket.write(filterdata)
+        const messageToSend = `${servname}: ${filterdata}`;
+            socket.write(messageToSend)
     });
+   
 });
 
 
